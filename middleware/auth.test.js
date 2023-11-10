@@ -99,22 +99,32 @@ describe("ensureIsAdmin", function () {
   });
 });
 describe("ensureIsUserOrAdmin", function () {
-  test("works", function () {
+  test("works : if user is admin", function () {
     expect.assertions(1);
-    const req = {};
+    const req = { params: { username: "test" } };
     const res = { locals: { user: { username: "test", isAdmin: true } } };
     const next = function (err) {
       expect(err).toBeFalsy();
     };
-    ensureIsAdmin(req, res, next);
+    ensureIsUserOrAdmin(req, res, next);
   });
+  test("works: if user is not admin", function () {
+    expect.assertions(1);
+    const req = { params: { username: "test" } };
+    const res = { locals: { user: { username: "test", isAdmin: false } } };
+    const next = function (err) {
+      expect(err).toBeFalsy();
+    };
+    ensureIsUserOrAdmin(req, res, next);
+  });
+
   test("fails", function () {
     expect.assertions(1);
-    const req = {};
+    const req = { params: { username: "wrong" } };
     const res = { locals: { user: { username: "test", isAdmin: false } } };
     const next = function (err) {
       expect(err instanceof UnauthorizedError).toBeTruthy();
     };
-    ensureIsAdmin(req, res, next);
+    ensureIsUserOrAdmin(req, res, next);
   });
 });
