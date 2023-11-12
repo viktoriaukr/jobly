@@ -8,6 +8,7 @@ const {
   commonBeforeEach,
   commonAfterEach,
   commonAfterAll,
+  jobsIds,
 } = require("./_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -142,6 +143,20 @@ describe("get", function () {
       description: "Desc1",
       numEmployees: 1,
       logoUrl: "http://c1.img",
+      jobs: [
+        {
+          id: jobsIds[0],
+          title: "j1",
+          salary: 22,
+          equity: "0.5",
+        },
+        {
+          id: jobsIds[1],
+          title: "j2",
+          salary: 2,
+          equity: "0",
+        },
+      ],
     });
   });
 

@@ -11,6 +11,7 @@ const Company = require("../models/company");
 
 const companyNewSchema = require("../schemas/companyNew.json");
 const companyUpdateSchema = require("../schemas/companyUpdate.json");
+const companySearchSchema = require("../schemas/companySearch.json");
 
 const router = new express.Router();
 
@@ -58,7 +59,7 @@ router.get("/", async function (req, res, next) {
     if (q.maxEmployees !== undefined) {
       ++q.maxEmployees;
     }
-    const companies = await Company.findAll(q);
+    const companies = await Company.findAll(q, companySearchSchema);
     return res.json({ companies });
   } catch (err) {
     return next(err);
