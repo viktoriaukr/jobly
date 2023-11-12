@@ -134,7 +134,7 @@ router.post(
   ensureIsUserOrAdmin,
   async function (req, res, next) {
     try {
-      const jobId = +req.params.id;
+      const jobId = req.params.id;
       await User.jobApplication(req.params.username, jobId);
       return res.json({ applied: jobId });
     } catch (err) {

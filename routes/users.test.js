@@ -357,11 +357,11 @@ describe("DELETE /users/:username", function () {
 
 /************************************** POST /users/:username/jobs/:id */
 
-// describe("POST /users/:username/jobs/:id", function () {
-//   test("works", async function () {
-//     const resp = await request(app)
-//       .post(`/users/u1/jobs/${testJobsIds[1]}`)
-//       .set("authorization", `Bearer ${admin}`);
-//     expect(resp.body).toEqual({ applied: testJobsIds[1] });
-//   });
-// });
+describe("POST /users/:username/jobs/:id", function () {
+  test("works", async function () {
+    const resp = await request(app)
+      .post(`/users/u1/jobs/${testJobsIds[1]}`)
+      .set("authorization", `Bearer ${admin}`);
+    expect(resp.body).toEqual({ applied: testJobsIds[1] });
+  });
+});
