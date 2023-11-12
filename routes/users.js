@@ -124,5 +124,23 @@ router.delete(
     }
   }
 );
+/**
+ * This route allows user to apply for a job (or an admin to do it for them)
+ *
+ * Authorization required: login
+ */
+router.post(
+  "/:username/jobs/:id",
+  ensureIsUserOrAdmin,
+  async function (req, res, next) {
+    try {
+      const jobId = +req.params.id;
+      await User.jobApplication(req.params.username, jobId);
+      return res.json({ applied: jobId });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
 
 module.exports = router;

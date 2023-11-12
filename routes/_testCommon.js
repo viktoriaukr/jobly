@@ -12,7 +12,6 @@ async function commonBeforeAll() {
   await db.query("DELETE FROM users");
   // noinspection SqlWithoutWhere
   await db.query("DELETE FROM companies");
-
   await Company.create({
     handle: "c1",
     name: "C1",
@@ -95,9 +94,13 @@ async function commonBeforeAll() {
     password: "password3",
     isAdmin: false,
   });
+
+  await User.jobApplication("u1", testJobsIds[0]);
 }
 
 async function commonBeforeEach() {
+  await db.query("DELETE FROM jobs");
+  await db.query("DELETE FROM applications");
   await db.query("BEGIN");
 }
 

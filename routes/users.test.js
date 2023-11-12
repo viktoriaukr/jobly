@@ -14,6 +14,7 @@ const {
   u1Token,
   u2Token,
   admin,
+  testJobsIds,
 } = require("./_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -177,6 +178,7 @@ describe("GET /users/:username", function () {
         lastName: "U1L",
         email: "user1@user.com",
         isAdmin: false,
+        applications: [],
       },
     });
   });
@@ -192,6 +194,7 @@ describe("GET /users/:username", function () {
         lastName: "U1L",
         email: "user1@user.com",
         isAdmin: false,
+        applications: [],
       },
     });
   });
@@ -351,3 +354,14 @@ describe("DELETE /users/:username", function () {
     expect(resp.statusCode).toEqual(404);
   });
 });
+
+/************************************** POST /users/:username/jobs/:id */
+
+// describe("POST /users/:username/jobs/:id", function () {
+//   test("works", async function () {
+//     const resp = await request(app)
+//       .post(`/users/u1/jobs/${testJobsIds[1]}`)
+//       .set("authorization", `Bearer ${admin}`);
+//     expect(resp.body).toEqual({ applied: testJobsIds[1] });
+//   });
+// });
