@@ -69,14 +69,6 @@ async function commonBeforeAll() {
       company_handle: "c1",
     })
   ).id;
-  testJobsIds[4] = (
-    await Job.create({
-      title: "j5",
-      salary: 500,
-      equity: "0.9",
-      company_handle: "c1",
-    })
-  ).id;
 
   await User.register({
     username: "u1",
@@ -104,12 +96,9 @@ async function commonBeforeAll() {
   });
 
   await User.jobApplication("u1", testJobsIds[0]);
-  await User.jobApplication("u2", testJobsIds[1]);
 }
 
 async function commonBeforeEach() {
-  await db.query("DELETE FROM jobs");
-  await db.query("DELETE FROM applications");
   await db.query("BEGIN");
 }
 

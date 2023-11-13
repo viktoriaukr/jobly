@@ -12,6 +12,7 @@ const {
   commonAfterEach,
   commonAfterAll,
   u1Token,
+  u2Token,
   admin,
   testJobsIds,
 } = require("./_testCommon");
@@ -177,7 +178,7 @@ describe("GET /users/:username", function () {
         lastName: "U1L",
         email: "user1@user.com",
         isAdmin: false,
-        applications: [],
+        applications: [testJobsIds[0]],
       },
     });
   });
@@ -193,7 +194,7 @@ describe("GET /users/:username", function () {
         lastName: "U1L",
         email: "user1@user.com",
         isAdmin: false,
-        applications: [],
+        applications: [testJobsIds[0]],
       },
     });
   });
@@ -366,15 +367,29 @@ describe("POST /users/:username/jobs/:id", function () {
 
   test("works for admin", async function () {
     const resp = await request(app)
-      .post(`/users/u1/jobs/${testJobsIds[4]}`)
-      .set("authorization", `Bearer ${admin}`);
-    expect(resp.body).toEqual({ applied: testJobsIds[4] });
+      .post(`/users/u1/jobs/${testJobsIds[1]}`)
+      .set("authorization", `Bearer ${u1Token}`);
+    expect(resp.body).toEqual({ applied: testJobsIds[1] });
   });
 
   test("unauth for anon", async function () {
     const resp = await request(app)
-      .post(`/users/u1/jobs/${testJobsIds[4]}`)
-      .set("authorization", `Bearer ${u1Token}`);
+      .post(`/users/u1/jobs/${testJobsIds[1]}`)
+      .set("authorization", `Bearer ${u2Token}`);
     expect(resp.statusCode).toBe(401);
+  });
+
+  test("not found for not existing user", async function () {
+    const resp = await request(app)
+      .post(`/users/invalid/jobs/${testJobsIds[1]}`)
+      .set("authorization", `Bearer ${admin}`);
+    expect(resp.statusCode).toBe(404);
+  });
+
+  test("not found for invalid job_id", async function () {
+    const resp = await request(app)
+      .post(`/users/u1/jobs/0`)
+      .set("authorization", `Bearer ${admin}`);
+    expect(resp.statusCode).toBe(404);
   });
 });

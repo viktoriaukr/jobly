@@ -83,42 +83,40 @@ describe("POST /jobs", function () {
 describe("GET /jobs", function () {
   test("works for anyone", async () => {
     const resp = await request(app).get("/jobs");
-    expect(resp.body).toEqual({
-      jobs: [
-        {
-          id: testJobsIds[0],
-          title: "j1",
-          salary: 100,
-          equity: "0.3",
-          company_handle: "c1",
-          name: "C1",
-        },
-        {
-          id: testJobsIds[1],
-          title: "j2",
-          salary: 200,
-          equity: "0.5",
-          company_handle: "c1",
-          name: "C1",
-        },
-        {
-          id: testJobsIds[2],
-          title: "j3",
-          salary: 500,
-          equity: "0.7",
-          company_handle: "c1",
-          name: "C1",
-        },
-        {
-          id: testJobsIds[3],
-          title: "j4",
-          salary: 50,
-          equity: "0",
-          company_handle: "c1",
-          name: "C1",
-        },
-      ],
-    });
+    expect(resp.body.jobs).toEqual([
+      {
+        id: testJobsIds[0],
+        title: "j1",
+        salary: 100,
+        equity: "0.3",
+        company_handle: "c1",
+        name: "C1",
+      },
+      {
+        id: testJobsIds[1],
+        title: "j2",
+        salary: 200,
+        equity: "0.5",
+        company_handle: "c1",
+        name: "C1",
+      },
+      {
+        id: testJobsIds[2],
+        title: "j3",
+        salary: 500,
+        equity: "0.7",
+        company_handle: "c1",
+        name: "C1",
+      },
+      {
+        id: testJobsIds[3],
+        title: "j4",
+        salary: 50,
+        equity: "0",
+        company_handle: "c1",
+        name: "C1",
+      },
+    ]);
   });
   test("search by title", async () => {
     const resp = await request(app).get("/jobs").query({ title: "j2" });
