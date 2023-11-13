@@ -107,6 +107,33 @@ router.patch(
   }
 );
 
+router.post(
+  "/:username/jobs/:id",
+  ensureIsUserOrAdmin,
+  async function (req, res, next) {
+    try {
+      const jobId = +req.params.id;
+      await User.jobApplication(req.params.username, jobId);
+      return res.status(200).json({ applied: jobId });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
+router.post(
+  "/:username/jobs/:id",
+  ensureIsUserOrAdmin,
+  async function (req, res, next) {
+    try {
+      const jobId = +req.params.id;
+      await User.jobApplication(req.params.username, jobId);
+      return res.status(200).json({ applied: jobId });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
+
 /** DELETE /[username]  =>  { deleted: username }
  *
  * Authorization required: login
@@ -129,18 +156,5 @@ router.delete(
  *
  * Authorization required: login
  */
-router.post(
-  "/:username/jobs/:id",
-  ensureIsUserOrAdmin,
-  async function (req, res, next) {
-    try {
-      const jobId = req.params.id;
-      await User.jobApplication(req.params.username, jobId);
-      return res.json({ applied: jobId });
-    } catch (err) {
-      return next(err);
-    }
-  }
-);
 
 module.exports = router;

@@ -12,7 +12,6 @@ const {
   commonAfterEach,
   commonAfterAll,
   u1Token,
-  u2Token,
   admin,
   testJobsIds,
 } = require("./_testCommon");
@@ -360,8 +359,22 @@ describe("DELETE /users/:username", function () {
 describe("POST /users/:username/jobs/:id", function () {
   test("works", async function () {
     const resp = await request(app)
-      .post(`/users/u1/jobs/${testJobsIds[1]}`)
+      .post(`/users/u2/jobs/${testJobsIds[1]}`)
       .set("authorization", `Bearer ${admin}`);
     expect(resp.body).toEqual({ applied: testJobsIds[1] });
+  });
+
+  test("works for admin", async function () {
+    const resp = await request(app)
+      .post(`/users/u1/jobs/${testJobsIds[4]}`)
+      .set("authorization", `Bearer ${admin}`);
+    expect(resp.body).toEqual({ applied: testJobsIds[4] });
+  });
+
+  test("unauth for anon", async function () {
+    const resp = await request(app)
+      .post(`/users/u1/jobs/${testJobsIds[4]}`)
+      .set("authorization", `Bearer ${u1Token}`);
+    expect(resp.statusCode).toBe(401);
   });
 });
